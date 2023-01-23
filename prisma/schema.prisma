@@ -1,0 +1,53 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Example {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model FunFactOfTheDay {
+  date      DateTime @id
+  funFactId String   @unique
+
+  funFact FunFact @relation(fields: [funFactId], references: [id])
+}
+
+model FunFact {
+  id             String   @id @default(uuid())
+  authorId       String
+  content        String
+  submissionTime DateTime @default(now())
+
+  author          Author            @relation(fields: [authorId], references: [id])
+  externalLinks   ExternalLink[]
+  funFactOfTheDay FunFactOfTheDay[]
+}
+
+model Author {
+  id        String @id @default(uuid())
+  firstName String
+  lastName  String
+
+  funFact FunFact[]
+
+  @@unique([firstName, lastName])
+}
+
+model ExternalLink {
+  id        String @id @default(uuid())
+  url       String @unique
+  funFactId String
+
+  funFact FunFact @relation(fields: [funFactId], references: [id])
+}

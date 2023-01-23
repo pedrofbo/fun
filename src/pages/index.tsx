@@ -7,21 +7,36 @@ import { useState } from "react";
 import { trpc } from "../utils/trpc";
 
 const Home: NextPage = () => {
-  const pokemon = trpc.pokemon.pokemonById.useQuery({ id: 257 });
+  const pokemon = trpc.pokemon.pokemonById.useQuery({ id: 905 });
 
   const pokemonData: JSX.Element = pokemon.data ? (
     <div className="flex max-w-3xl flex-col gap-4 rounded-xl bg-white/10 p-4 text-white">
-      <p className="text-2xl">{pokemon.data.name}</p>
-      <p className="text-2xl">{pokemon.data.height} cm</p>
-      <p className="text-2xl">{pokemon.data.weight} Kg</p>
-      <p className="text-2xl">{pokemon.data.pokedexEntry.flavor_text}</p>
-      <p className="text-2xl">{pokemon.data.pokedexEntry.version}</p>
-      <Image
-        src={pokemon.data.artwork}
-        alt="yo"
-        width={500}
-        height={500}
-      />
+      <p className="text-md italic">Pokémon do dia:</p>
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <Image src={pokemon.data.artwork} alt={pokemon.data.pokedexEntry.flavor_text} width={500} height={500} />
+        </div>
+        <div>
+          <div className="rounded-xl bg-white/20 p-2 mb-5">
+            <p className="text-2xl text-center italic">{pokemon.data.name}</p>
+          </div>
+          <div className="rounded-xl bg-white/20 p-2">
+            <p className="text-md italic">Descrição:</p>
+            <p className="text-lg pt-2">{pokemon.data.pokedexEntry.flavor_text}</p>
+            <p className="text-md text-right italic pt-2">Pokémon {pokemon.data.pokedexEntry.version}</p>
+          </div>
+          <div className="grid grid-cols-2 gap-4 pt-5">
+            <div className="rounded-xl bg-white/20 p-2">
+              <p className="text-md italic">Altura:</p>
+              <p className="text-lg text-right">{pokemon.data.height} cm</p>
+            </div>
+            <div className="rounded-xl bg-white/20 p-2">
+              <p className="text-md italic">Peso:</p>
+              <p className="text-lg text-right">{pokemon.data.weight} Kg</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   ) : (
     <span className="flex h-5 w-5">
@@ -35,20 +50,21 @@ const Home: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Fun Fact of the day</title>
-        <meta name="description" content="Another day, another fun fact of the day" />
+        <title>F.F.</title>
+        <meta name="description" content="Mais um dia, mais um fun fact" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c]">
         <div className="container flex flex-col items-center justify-center gap-10 px-4 py-16">
-          <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">Fun Fact</span> of the day
+          <h1 className="text-6xl font-extrabold tracking-tight text-white">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">2023-01-22</span>
           </h1>
           <div className="gap-4 md:gap-8">
             <Link
               className="flex max-w-3xl flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
               href="https://create.t3.gg/en/usage/first-steps"
             >
+              <p className="text-md italic">Fun fact do dia:</p>
               <div className="text-lg">
                 {funFact.data ? funFact.data.content : "Vazio :("}
               </div>

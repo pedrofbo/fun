@@ -14,6 +14,7 @@ export const pokemonRouter = router({
       return {
         name: pokemon.name,
         artwork: pokemon.artwork,
+        types: pokemon.types,
         height: pokemon.height,
         weight: pokemon.weight,
         pokedexEntry: pokemon.pokedexEntry
@@ -27,9 +28,12 @@ const fetchPokemon = async (id: number) => {
   const pokemonInfo = await pokemonInfoPromise;
   const pokedexEntry = sampleAndParsePokedexEntry(pokemonInfo.flavor_text_entries)
   const pokemon = await pokemonPromise;
+  const pokemonTypes = pokemon.types.map((value) => value.type.name);
+
   return {
     name: pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1),
     artwork: pokemon.sprites.other ? pokemon.sprites.other["official-artwork"].front_default as string : default_artwork,
+    types: pokemonTypes,
     height: pokemon.height * 10,
     weight: pokemon.weight / 10,
     pokedexEntry: pokedexEntry

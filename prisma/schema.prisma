@@ -17,10 +17,12 @@ model Example {
 }
 
 model FunFactOfTheDay {
-  date      DateTime @id
-  funFactId String   @unique
+  date              DateTime @id
+  funFactId         String   @unique
+  pokemonOfTheDayId String   @unique
 
-  funFact FunFact @relation(fields: [funFactId], references: [id])
+  funFact         FunFact         @relation(fields: [funFactId], references: [id])
+  pokemonOfTheDay PokemonOfTheDay @relation(fields: [pokemonOfTheDayId], references: [id])
 }
 
 model FunFact {
@@ -50,4 +52,41 @@ model ExternalLink {
   funFactId String
 
   funFact FunFact @relation(fields: [funFactId], references: [id])
+}
+
+model PokemonOfTheDay {
+  id             String @id @default(uuid())
+  pokemonId      Int
+  pokedexEntryId String @unique
+
+  pokemon         Pokemon          @relation(fields: [pokemonId], references: [id])
+  pokedexEntry    PokedexEntry     @relation(fields: [pokedexEntryId], references: [id])
+  funFactOfTheDay FunFactOfTheDay?
+
+  @@unique([pokemonId, pokedexEntryId])
+}
+
+model Pokemon {
+  id         Int     @id
+  name       String
+  artworkUrl String
+  height     Int
+  weight     Float
+  firstType  String
+  secondType String?
+
+  pokedexEntry    PokedexEntry[]
+  pokemonOfTheDay PokemonOfTheDay[]
+}
+
+model PokedexEntry {
+  id        String @id @default(uuid())
+  pokemonId Int
+  entry     String
+  version   String
+
+  pokemon         Pokemon          @relation(fields: [pokemonId], references: [id])
+  pokemonOfTheDay PokemonOfTheDay?
+
+  @@unique([pokemonId, version])
 }

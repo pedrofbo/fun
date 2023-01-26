@@ -12,6 +12,7 @@ export const pokemonRouter = router({
     .query(async ({ input }) => {
       const pokemon = await fetchPokemon(input.id);
       return {
+        id: pokemon.id,
         name: pokemon.name,
         artwork: pokemon.artwork,
         types: pokemon.types,
@@ -22,7 +23,7 @@ export const pokemonRouter = router({
     })
 });
 
-const fetchPokemon = async (id: number) => {
+export const fetchPokemon = async (id: number) => {
   const pokemonInfoPromise = api.getPokemonSpeciesById(id);
   const pokemonPromise = api.getPokemonById(id);
   const pokemonInfo = await pokemonInfoPromise;
@@ -31,6 +32,7 @@ const fetchPokemon = async (id: number) => {
   const pokemonTypes = pokemon.types.map((value) => value.type.name);
 
   return {
+    id: pokemon.id,
     name: pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1),
     artwork: pokemon.sprites.other ? pokemon.sprites.other["official-artwork"].front_default as string : default_artwork,
     types: pokemonTypes,
@@ -90,6 +92,6 @@ const sampleAndParsePokedexEntry = (entries: FlavorText[]) => {
   };
   return {
     flavor_text: entry.flavor_text.replaceAll("\n", " ").replaceAll("\f", " ").replaceAll("POKéMON", "Pokémon"),
-    version: versionNameConversion[entry.version.name]
+    version: versionNameConversion[entry.version.name] as string
   };
 }

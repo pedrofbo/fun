@@ -1,7 +1,5 @@
 import Image from 'next/image';
 
-import { trpc } from "../utils/trpc";
-
 export interface Pokemon {
   id: number,
   name: string,
@@ -47,7 +45,7 @@ export const PokemonBlock = (pokemon: Pokemon, pokedexEntry: PokedexEntry) => {
   }
 
   return (
-    <div className="flex max-w-3xl flex-col gap-4 rounded-xl bg-white/10 p-4 text-white">
+    <div className="flex max-w-3xl flex-col gap-4 rounded-xl bg-white/10 p-4">
       <p className="text-md italic">Pokémon do dia:</p>
       <div className="grid grid-cols-2 gap-4">
 
@@ -57,7 +55,7 @@ export const PokemonBlock = (pokemon: Pokemon, pokedexEntry: PokedexEntry) => {
 
         <div>
           <div className="rounded-xl bg-white/20 p-2 mb-5">
-            <p className="text-2xl text-center italic">{pokemon.name}</p>
+            <p className="text-2xl text-center italic">#{pokemon.id} - {pokemon.name}</p>
           </div>
 
           {typeBlock}

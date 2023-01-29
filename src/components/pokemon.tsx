@@ -21,7 +21,7 @@ export const PokemonBlock = (pokemon: Pokemon, pokedexEntry: PokedexEntry) => {
   let typeBlock: JSX.Element = <div></div>;
   if (!pokemon.secondType) {
     typeBlock = (
-      <div className="rounded-xl bg-white/20 p-2 mb-5">
+      <div className="rounded-xl p-2 mb-5 bg-[#9b16f383] dark:bg-white/20">
         <p className="text-md italic">Tipo:</p>
         <div className="flex flex-col items-center">
           <Image src={`/pokemon_types/${pokemon.firstType}.png`} alt={pokemon.firstType} width={100} height={100} />
@@ -30,7 +30,7 @@ export const PokemonBlock = (pokemon: Pokemon, pokedexEntry: PokedexEntry) => {
     );
   } else {
     typeBlock = (
-      <div className="rounded-xl bg-white/20 p-2 mb-5">
+      <div className="rounded-xl p-2 mb-5 bg-[#9b16f383] dark:bg-white/20">
         <p className="text-md italic">Tipo:</p>
         <div className="grid grid-cols-2">
           <div className="flex flex-col items-end">
@@ -45,7 +45,7 @@ export const PokemonBlock = (pokemon: Pokemon, pokedexEntry: PokedexEntry) => {
   }
 
   return (
-    <div className="flex max-w-3xl flex-col gap-4 rounded-xl bg-white/10 p-4">
+    <div className="flex max-w-3xl flex-col gap-4 rounded-xl p-4 border-2 border-[#9b16f3bb] dark:bg-[#9b16f3bb] dark:border-none">
       <p className="text-md italic">Pokémon do dia:</p>
       <div className="grid grid-cols-2 gap-4">
 
@@ -54,26 +54,26 @@ export const PokemonBlock = (pokemon: Pokemon, pokedexEntry: PokedexEntry) => {
         </div>
 
         <div>
-          <div className="rounded-xl bg-white/20 p-2 mb-5">
+          <div className="rounded-xl p-2 mb-5 bg-[#9b16f383] dark:bg-white/20">
             <p className="text-2xl text-center italic">#{pokemon.id} - {pokemon.name}</p>
           </div>
 
           {typeBlock}
 
-          <div className="rounded-xl bg-white/20 p-2">
-            <p className="text-md italic">Descrição:</p>
+          <div className="italic rounded-xl p-2 bg-[#9b16f383] dark:bg-white/20">
+            <p className="text-md">Descrição:</p>
             <p className="text-lg pt-2">{pokedexEntry.entry}</p>
-            <p className="text-md text-right italic pt-2">Pokémon {pokedexEntry.version}</p>
+            <p className="text-md text-right pt-2">Pokémon {pokedexEntry.version}</p>
           </div>
 
           <div className="grid grid-cols-2 gap-4 pt-5">
 
-            <div className="rounded-xl bg-white/20 p-2">
+            <div className="rounded-xl p-2 bg-[#9b16f383] dark:bg-white/20">
               <p className="text-md italic">Altura:</p>
               <p className="text-lg text-right">{pokemon.height} cm</p>
             </div>
 
-            <div className="rounded-xl bg-white/20 p-2">
+            <div className="rounded-xl p-2 bg-[#9b16f383] dark:bg-white/20">
               <p className="text-md italic">Peso:</p>
               <p className="text-lg text-right">{pokemon.weight} Kg</p>
             </div>

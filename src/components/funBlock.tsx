@@ -1,5 +1,8 @@
+import Head from "next/head";
+
 import { FunFactBlock, FunFact } from "./funFact";
 import { PokemonBlock, Pokemon, PokedexEntry } from "./pokemon";
+import Header from "./header";
 import { trpc } from "../utils/trpc";
 
 export const FunBlock = (date: string) => {
@@ -25,12 +28,22 @@ export const FunBlock = (date: string) => {
   }
 
   return (
-    <div className="container flex flex-col items-center justify-center gap-10 px-4 py-16">
-      <h1 className="text-6xl font-extrabold tracking-tight">
-        <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">{date}</span>
-      </h1>
-      {funFactBlock}
-      {pokemonBlock}
-    </div>
+    <>
+      <Head>
+        <title>F.F.</title>
+        <meta name="description" content="Mais um dia, mais um fun fact" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <main className="text-black bg-white dark:text-white dark:bg-[#15162c]">
+        {Header()}
+        <div className="flex flex-col items-center justify-center gap-10 px-4 py-16">
+          <h1 className="text-6xl font-extrabold tracking-tight">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#bd0a0a] to-[#362ad6] dark:from-[#362ad6] dark:to-[#bd0a0a]">{date}</span>
+          </h1>
+          {funFactBlock}
+          {pokemonBlock}
+        </div>
+      </main>
+    </>
   );
 };

@@ -36,7 +36,7 @@ export const FunBlock = (date: string) => {
       </Head>
       <main className="text-black bg-white dark:text-white dark:bg-[#15162c]">
         {Header()}
-        <div className="flex flex-col items-center justify-center gap-10 px-4 py-16">
+        <div className="min-h-screen flex flex-col items-center gap-10 p-4">
           <h1 className="text-6xl font-extrabold tracking-tight">
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#bd0a0a] to-[#362ad6] dark:from-[#362ad6] dark:to-[#bd0a0a]">{date}</span>
           </h1>

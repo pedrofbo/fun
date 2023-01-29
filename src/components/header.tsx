@@ -15,15 +15,17 @@ export const Header = () => {
     return null
   }
 
+  const themeButton = (
+    <button onClick={() => setTheme(theme === "dark" ? "light" : "dark")}>
+      <div className="p-2 border-2 rounded-3xl border-[#15162c] dark:border-[#9b16f3bb]">
+        <img src={`/${theme === "dark" ? "dark_mode" : "light_mode"}.png`} alt="test" className="h-10 w-10" />
+      </div>
+    </button>
+  );
+
   return (
-    <div>
-      <div>The current theme is: {theme}</div>
-      <div><button onClick={() => setTheme(theme === "dark" ? "light" : "dark")}>Button</button></div>
-      <div><button onClick={() => setTheme("dark")}>Dark Mode</button></div>
-      <div><button onClick={() => setTheme("system")}>System Mode</button></div>
-      {/* <div>
-        <Image src={`/${theme === "dark" ? "dark_mode" : "light_mode"}.svg`} alt="test" height={50} width={50} className="fill-purple-500" />
-      </div> */}
+    <div className="p-8 flex flex-col items-end">
+      {themeButton}
     </div>
   )
 };

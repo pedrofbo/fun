@@ -7,6 +7,7 @@ import { trpc } from "../utils/trpc";
 
 export const FunBlock = (date: string) => {
   const funFactOfTheDay = trpc.fun.getFunFactOfTheDay.useQuery({ date: date as string });
+  const featureFlags = trpc.featureFlag.getFeatureFlags.useQuery();
 
   const loadingBlock = (
     <span className="flex h-5 w-5">
@@ -35,7 +36,7 @@ export const FunBlock = (date: string) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="text-black bg-white dark:text-white dark:bg-[#15162c]">
-        {Header()}
+        {Header(featureFlags.data)}
         <div className="min-h-screen flex flex-col items-center gap-10 p-4">
           <h1 className="text-6xl font-extrabold tracking-tight">
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#bd0a0a] to-[#362ad6] dark:from-[#362ad6] dark:to-[#bd0a0a]">{date}</span>

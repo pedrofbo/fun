@@ -6,7 +6,9 @@ import { FunBlock } from "../../components/funBlock";
 const FunFactPage: NextPage = () => {
   const router = useRouter();
   const { date } = router.query;
-
+  if (!date) {
+    return <></>;
+  }
   return FunBlock(date as string);
 };
 

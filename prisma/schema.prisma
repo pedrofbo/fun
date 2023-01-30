@@ -90,3 +90,8 @@ model PokedexEntry {
 
   @@unique([pokemonId, version])
 }
+
+model FeatureFlag {
+  flag    String  @id
+  enabled Boolean
+}

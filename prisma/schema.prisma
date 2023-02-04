@@ -48,7 +48,7 @@ model Author {
 
 model ExternalLink {
   id        String @id @default(uuid())
-  url       String @unique
+  url       String
   funFactId String
 
   funFact FunFact @relation(fields: [funFactId], references: [id])

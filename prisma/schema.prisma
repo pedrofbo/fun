@@ -6,14 +6,9 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL")
-}
-
-model Example {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
 }
 
 model FunFactOfTheDay {
@@ -23,17 +18,22 @@ model FunFactOfTheDay {
 
   funFact         FunFact         @relation(fields: [funFactId], references: [id])
   pokemonOfTheDay PokemonOfTheDay @relation(fields: [pokemonOfTheDayId], references: [id])
+
+  @@index([funFactId])
+  @@index([pokemonOfTheDayId])
 }
 
 model FunFact {
   id             String   @id @default(uuid())
   authorId       String
-  content        String
+  content        String   @db.Text
   submissionTime DateTime @default(now())
 
   author          Author            @relation(fields: [authorId], references: [id])
   externalLinks   ExternalLink[]
   funFactOfTheDay FunFactOfTheDay[]
+
+  @@index([authorId])
 }
 
 model Author {
@@ -48,10 +48,12 @@ model Author {
 
 model ExternalLink {
   id        String @id @default(uuid())
-  url       String
+  url       String @db.Text
   funFactId String
 
   funFact FunFact @relation(fields: [funFactId], references: [id])
+
+  @@index([funFactId])
 }
 
 model PokemonOfTheDay {
@@ -64,6 +66,7 @@ model PokemonOfTheDay {
   funFactOfTheDay FunFactOfTheDay?
 
   @@unique([pokemonId, pokedexEntryId])
+  @@index([pokemonId, pokedexEntryId])
 }
 
 model Pokemon {
@@ -82,13 +85,14 @@ model Pokemon {
 model PokedexEntry {
   id        String @id @default(uuid())
   pokemonId Int
-  entry     String
+  entry     String @db.Text
   version   String
 
   pokemon         Pokemon          @relation(fields: [pokemonId], references: [id])
   pokemonOfTheDay PokemonOfTheDay?
 
   @@unique([pokemonId, version])
+  @@index([pokemonId])
 }
 
 model FeatureFlag {

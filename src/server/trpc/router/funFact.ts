@@ -40,4 +40,27 @@ export const funRouter = router({
         }
       });
     }),
+  getFunFactOfTheDay: publicProcedure
+    .input(z.object({ date: z.string() }))
+    .query(({ ctx, input }) => {
+      const date = new Date(input.date);
+      return ctx.prisma.funFactOfTheDay.findUnique({
+        where: {
+          date: date
+        },
+        include: {
+          funFact: {
+            include: {
+              author: true
+            }
+          },
+          pokemonOfTheDay: {
+            include: {
+              pokemon: true,
+              pokedexEntry: true
+            }
+          }
+        }
+      });
+    })
 });

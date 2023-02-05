@@ -6,32 +6,34 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL")
-}
-
-model Example {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
 }
 
 model FunFactOfTheDay {
-  date      DateTime @id
-  funFactId String   @unique
+  date              DateTime @id
+  funFactId         String   @unique
+  pokemonOfTheDayId String   @unique
 
-  funFact FunFact @relation(fields: [funFactId], references: [id])
+  funFact         FunFact         @relation(fields: [funFactId], references: [id])
+  pokemonOfTheDay PokemonOfTheDay @relation(fields: [pokemonOfTheDayId], references: [id])
+
+  @@index([funFactId])
+  @@index([pokemonOfTheDayId])
 }
 
 model FunFact {
   id             String   @id @default(uuid())
   authorId       String
-  content        String
+  content        String   @db.Text
   submissionTime DateTime @default(now())
 
   author          Author            @relation(fields: [authorId], references: [id])
   externalLinks   ExternalLink[]
   funFactOfTheDay FunFactOfTheDay[]
+
+  @@index([authorId])
 }
 
 model Author {
@@ -46,8 +48,54 @@ model Author {
 
 model ExternalLink {
   id        String @id @default(uuid())
-  url       String @unique
+  url       String @db.Text
   funFactId String
 
   funFact FunFact @relation(fields: [funFactId], references: [id])
+
+  @@index([funFactId])
+}
+
+model PokemonOfTheDay {
+  id             String @id @default(uuid())
+  pokemonId      Int
+  pokedexEntryId String @unique
+
+  pokemon         Pokemon          @relation(fields: [pokemonId], references: [id])
+  pokedexEntry    PokedexEntry     @relation(fields: [pokedexEntryId], references: [id])
+  funFactOfTheDay FunFactOfTheDay?
+
+  @@unique([pokemonId, pokedexEntryId])
+  @@index([pokemonId, pokedexEntryId])
+}
+
+model Pokemon {
+  id         Int     @id
+  name       String
+  artworkUrl String
+  height     Int
+  weight     Float
+  firstType  String
+  secondType String?
+
+  pokedexEntry    PokedexEntry[]
+  pokemonOfTheDay PokemonOfTheDay[]
+}
+
+model PokedexEntry {
+  id        String @id @default(uuid())
+  pokemonId Int
+  entry     String @db.Text
+  version   String
+
+  pokemon         Pokemon          @relation(fields: [pokemonId], references: [id])
+  pokemonOfTheDay PokemonOfTheDay?
+
+  @@unique([pokemonId, version])
+  @@index([pokemonId])
+}
+
+model FeatureFlag {
+  flag    String  @id
+  enabled Boolean
 }

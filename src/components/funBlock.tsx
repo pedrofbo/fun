@@ -2,6 +2,7 @@ import Head from "next/head";
 
 import { FunFactBlock, FunFact } from "./funFact";
 import { PokemonBlock, Pokemon, PokedexEntry } from "./pokemon";
+import { loadingBlock } from "./loadingBlock";
 import Header from "./header";
 import { trpc } from "../utils/trpc";
 
@@ -10,13 +11,6 @@ export const FunBlock = (date: string) => {
     date: date as string,
   });
   const featureFlags = trpc.featureFlag.getFeatureFlags.useQuery();
-
-  const loadingBlock = (
-    <span className="flex h-5 w-5">
-      <span className="absolute inline-flex h-5 w-5 animate-ping rounded-full bg-sky-400 opacity-75"></span>
-      <span className="relative inline-flex h-5 w-5 rounded-full bg-sky-500"></span>
-    </span>
-  );
 
   let funFactBlock = <div></div>;
   let pokemonBlock = <div></div>;

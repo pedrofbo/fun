@@ -25,7 +25,10 @@ export const FunFacts = (funFacts: FunFactList) => {
   });
   const funFactBlocks = shortenedFunFacts.map((funFact) => {
     return (
-      <Link href={`/funFact/${funFact.date.toISOString().slice(0, 10)}`}>
+      <Link
+        href={`/funFact/${funFact.date.toISOString().slice(0, 10)}`}
+        key={funFact.date.toISOString().slice(0, 10)}
+      >
         <div className="flex max-w-sm flex-col gap-4 rounded-xl border-2 border-[#9b16f3bb] p-4 dark:border-none dark:bg-[#9b16f3bb]">
           <div className="grid-cols-3 md:grid">
             <div className="col-span-2">

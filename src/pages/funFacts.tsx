@@ -21,7 +21,7 @@ const FunFactListBlock = (date: string) => {
       <Head>
         <title>F.F.</title>
         <meta name="description" content="Mais um dia, mais um fun fact" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/ff.png" />
       </Head>
       <main className="bg-white text-black dark:bg-[#15162c] dark:text-white">
         {Header(featureFlags.data)}

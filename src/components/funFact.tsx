@@ -17,7 +17,13 @@ export interface FunFact {
 export const FunFactBlock = (funFact: FunFact) => {
   const references = funFact.externalLinks.map((link, index) => {
     return (
-      <a href={link.url} target="_blank" className="hover:text-[#3366cc]">
+      <a
+        href={link.url}
+        target="_blank"
+        rel="noreferrer"
+        className="hover:text-[#3366cc]"
+        key={link.url}
+      >
         {index + 1}
         {"         "}
       </a>

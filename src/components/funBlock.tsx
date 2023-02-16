@@ -1,5 +1,3 @@
-import Head from "next/head";
-
 import { FunFactBlock, FunFact } from "./funFact";
 import { PokemonBlock, Pokemon, PokedexEntry } from "./pokemon";
 import { loadingBlock } from "./loadingBlock";
@@ -26,38 +24,6 @@ export const FunBlock = (date: string) => {
 
   return (
     <>
-      <Head>
-        <title>F.F.</title>
-        <meta name="description" content="Mais um dia, mais um fun fact" />
-        <link rel="icon" href="/favicon.ico" />
-        <meta property="og:title" content="F.F." />
-        <meta
-          property="og:description"
-          content={
-            funFactOfTheDay.data
-              ? funFactOfTheDay.data.funFact.content
-              : "boom :)"
-          }
-        />
-        <meta
-          property="og:image"
-          content={
-            funFactOfTheDay.data
-              ? funFactOfTheDay.data.pokemonOfTheDay.pokemon.artworkUrl
-              : "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/132.png"
-          }
-        />
-        <meta
-          name="twitter:image"
-          content={
-            funFactOfTheDay.data
-              ? funFactOfTheDay.data.pokemonOfTheDay.pokemon.artworkUrl
-              : "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/132.png"
-          }
-        />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="theme-color" content="#000000" />
-      </Head>
       <main className="bg-white text-black dark:bg-[#15162c] dark:text-white">
         {Header(featureFlags.data)}
         <div className="flex min-h-screen flex-col items-center gap-10 p-4">

@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 import { FunFactBlock, FunFact } from "./funFact";
 import { PokemonBlock, Pokemon, PokedexEntry } from "./pokemon";
 import { loadingBlock } from "./loadingBlock";
@@ -10,7 +12,9 @@ export const FunBlock = (date: string) => {
   });
   const featureFlags = trpc.featureFlag.getFeatureFlags.useQuery();
 
-  let funFactBlock = <div></div>;
+  console.log(funFactOfTheDay.isFetched);
+
+  let funFactBlock = loadingBlock;
   let pokemonBlock = <div></div>;
   if (funFactOfTheDay.data) {
     pokemonBlock = PokemonBlock(
@@ -18,8 +22,8 @@ export const FunBlock = (date: string) => {
       funFactOfTheDay.data.pokemonOfTheDay.pokedexEntry as PokedexEntry
     );
     funFactBlock = FunFactBlock(funFactOfTheDay.data.funFact as FunFact);
-  } else {
-    funFactBlock = loadingBlock;
+  } else if (funFactOfTheDay.isFetched) {
+    funFactBlock = undefinedBlock;
   }
 
   return (
@@ -39,3 +43,17 @@ export const FunBlock = (date: string) => {
     </>
   );
 };
+
+const undefinedBlock = (
+  <div className="max-w-5xl">
+    <h1 className="pb-8 text-center text-3xl font-extrabold">
+      Você esperava um Fun Fact, mas tudo que você encontrou foi o Dio.
+    </h1>
+    <Image
+      src="/dio.jpg"
+      alt="このディオだ！"
+      height={900}
+      width={1600}
+    ></Image>
+  </div>
+);

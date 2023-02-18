@@ -1,7 +1,8 @@
-import Head from "next/head";
+import Image from "next/image";
 
 import { FunFactBlock, FunFact } from "./funFact";
 import { PokemonBlock, Pokemon, PokedexEntry } from "./pokemon";
+import { loadingBlock } from "./loadingBlock";
 import Header from "./header";
 import { trpc } from "../utils/trpc";
 
@@ -11,14 +12,7 @@ export const FunBlock = (date: string) => {
   });
   const featureFlags = trpc.featureFlag.getFeatureFlags.useQuery();
 
-  const loadingBlock = (
-    <span className="flex h-5 w-5">
-      <span className="absolute inline-flex h-5 w-5 animate-ping rounded-full bg-sky-400 opacity-75"></span>
-      <span className="relative inline-flex h-5 w-5 rounded-full bg-sky-500"></span>
-    </span>
-  );
-
-  let funFactBlock = <div></div>;
+  let funFactBlock = loadingBlock;
   let pokemonBlock = <div></div>;
   if (funFactOfTheDay.data) {
     pokemonBlock = PokemonBlock(
@@ -26,44 +20,12 @@ export const FunBlock = (date: string) => {
       funFactOfTheDay.data.pokemonOfTheDay.pokedexEntry as PokedexEntry
     );
     funFactBlock = FunFactBlock(funFactOfTheDay.data.funFact as FunFact);
-  } else {
-    funFactBlock = loadingBlock;
+  } else if (funFactOfTheDay.isFetched) {
+    funFactBlock = undefinedBlock;
   }
 
   return (
     <>
-      <Head>
-        <title>F.F.</title>
-        <meta name="description" content="Mais um dia, mais um fun fact" />
-        <link rel="icon" href="/favicon.ico" />
-        <meta property="og:title" content="F.F." />
-        <meta
-          property="og:description"
-          content={
-            funFactOfTheDay.data
-              ? funFactOfTheDay.data.funFact.content
-              : "boom :)"
-          }
-        />
-        <meta
-          property="og:image"
-          content={
-            funFactOfTheDay.data
-              ? funFactOfTheDay.data.pokemonOfTheDay.pokemon.artworkUrl
-              : "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/132.png"
-          }
-        />
-        <meta
-          name="twitter:image"
-          content={
-            funFactOfTheDay.data
-              ? funFactOfTheDay.data.pokemonOfTheDay.pokemon.artworkUrl
-              : "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/132.png"
-          }
-        />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="theme-color" content="#000000" />
-      </Head>
       <main className="bg-white text-black dark:bg-[#15162c] dark:text-white">
         {Header(featureFlags.data)}
         <div className="flex min-h-screen flex-col items-center gap-10 p-4">
@@ -79,3 +41,17 @@ export const FunBlock = (date: string) => {
     </>
   );
 };
+
+const undefinedBlock = (
+  <div className="max-w-5xl">
+    <h1 className="pb-8 text-center text-3xl font-extrabold">
+      Você esperava um Fun Fact, mas tudo que você encontrou foi o Dio.
+    </h1>
+    <Image
+      src="/dio.jpg"
+      alt="このディオだ！"
+      height={900}
+      width={1600}
+    ></Image>
+  </div>
+);

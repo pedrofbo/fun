@@ -4,11 +4,13 @@ import { router, publicProcedure } from "../trpc";
 
 export const funRouter = router({
   createFunFact: publicProcedure
-    .input(z.object({
-      content: z.string(),
-      author: z.object({ firstName: z.string(), lastName: z.string() }),
-      link: z.string()
-    }))
+    .input(
+      z.object({
+        content: z.string(),
+        author: z.object({ firstName: z.string(), lastName: z.string() }),
+        link: z.string(),
+      })
+    )
     .query(({ ctx, input }) => {
       const funFact = ctx.prisma.funFact.create({
         data: {
@@ -16,15 +18,15 @@ export const funRouter = router({
           author: {
             create: {
               firstName: input.author.firstName,
-              lastName: input.author.lastName
-            }
+              lastName: input.author.lastName,
+            },
           },
           externalLinks: {
             create: {
-              url: input.link
-            }
-          }
-        }
+              url: input.link,
+            },
+          },
+        },
       });
       return funFact;
     }),
@@ -33,11 +35,11 @@ export const funRouter = router({
     .query(({ ctx, input }) => {
       return ctx.prisma.funFact.findUnique({
         where: {
-          id: input.id
+          id: input.id,
         },
         include: {
-          author: true
-        }
+          author: true,
+        },
       });
     }),
   getFunFactOfTheDay: publicProcedure
@@ -46,21 +48,35 @@ export const funRouter = router({
       const date = new Date(input.date);
       return ctx.prisma.funFactOfTheDay.findUnique({
         where: {
-          date: date
+          date: date,
         },
         include: {
           funFact: {
             include: {
-              author: true
-            }
+              author: true,
+              externalLinks: true,
+            },
           },
           pokemonOfTheDay: {
             include: {
               pokemon: true,
-              pokedexEntry: true
-            }
-          }
-        }
+              pokedexEntry: true,
+            },
+          },
+        },
       });
-    })
+    }),
+  getFunFactList: publicProcedure.query(({ ctx }) => {
+    return ctx.prisma.funFactOfTheDay.findMany({
+      include: {
+        funFact: true,
+        pokemonOfTheDay: {
+          include: {
+            pokemon: true,
+          },
+        },
+      },
+      orderBy: [{ date: "desc" }],
+    });
+  }),
 });

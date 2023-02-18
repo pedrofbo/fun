@@ -1,3 +1,4 @@
+import Head from "next/head";
 import Image from "next/image";
 
 import { FunFactBlock, FunFact } from "./funFact";
@@ -14,18 +15,25 @@ export const FunBlock = (date: string) => {
 
   let funFactBlock = loadingBlock;
   let pokemonBlock = <div></div>;
+  let metaDataBlock = <></>;
   if (funFactOfTheDay.data) {
     pokemonBlock = PokemonBlock(
       funFactOfTheDay.data.pokemonOfTheDay.pokemon as Pokemon,
       funFactOfTheDay.data.pokemonOfTheDay.pokedexEntry as PokedexEntry
     );
     funFactBlock = FunFactBlock(funFactOfTheDay.data.funFact as FunFact);
+    metaDataBlock = headMetadata(
+      funFactOfTheDay.data.date.toJSON().slice(0, 10),
+      funFactOfTheDay.data.funFact.content,
+      funFactOfTheDay.data.pokemonOfTheDay.pokemon.artworkUrl
+    );
   } else if (funFactOfTheDay.isFetched) {
     funFactBlock = undefinedBlock;
   }
 
   return (
     <>
+      {metaDataBlock}
       <main className="bg-white text-black dark:bg-[#15162c] dark:text-white">
         {Header(featureFlags.data)}
         <div className="flex min-h-screen flex-col items-center gap-10 p-4">
@@ -55,3 +63,18 @@ const undefinedBlock = (
     ></Image>
   </div>
 );
+
+const headMetadata = (date: string, content: string, artworkUrl: string) => {
+  return (
+    <Head>
+      <title>{date}</title>
+      <meta property="og:title" content={date} />
+      <meta name="description" content={content} />
+      <meta property="og:description" content={content} />
+      <meta property="og:image" content={artworkUrl} />
+      <meta name="twitter:image" content={artworkUrl} />
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="theme-color" content="#000000" />
+    </Head>
+  );
+};

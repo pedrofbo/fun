@@ -12,8 +12,6 @@ export const FunBlock = (date: string) => {
   });
   const featureFlags = trpc.featureFlag.getFeatureFlags.useQuery();
 
-  console.log(funFactOfTheDay.isFetched);
-
   let funFactBlock = loadingBlock;
   let pokemonBlock = <div></div>;
   if (funFactOfTheDay.data) {

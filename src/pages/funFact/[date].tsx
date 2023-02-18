@@ -1,23 +1,23 @@
-import Head from "next/head";
 import Image from "next/image";
-import { type NextPage } from "next";
-import { useRouter } from "next/router";
+import superjson from "superjson";
+import { createProxySSGHelpers } from "@trpc/react-query/ssg";
+import { GetStaticPropsContext, InferGetStaticPropsType } from "next";
 
 import Header from "../../components/header";
 import { FunBlock } from "../../components/funBlock";
+import { prisma } from "../../server/db/client";
+import { appRouter } from "../../server/trpc/router/_app";
+import { createContextInner } from "../../server/trpc/context";
 import { trpc } from "../../utils/trpc";
 
-const FunFactPage: NextPage = () => {
-  const router = useRouter();
-  const { date } = router.query;
-  if (!date) {
-    return <></>;
-  }
-  const dateObject = new Date(date as string);
+const FunFactPage = ({
+  date,
+}: InferGetStaticPropsType<typeof getStaticProps>) => {
+  const dateObject = new Date(date);
   if (!isFinite(dateObject.getTime())) {
-    return ErrorPage(date as string);
+    return ErrorPage(date);
   }
-  return FunBlock(date as string);
+  return FunBlock(date);
 };
 
 const ErrorPage = (input: string) => {
@@ -51,3 +51,39 @@ const ErrorPage = (input: string) => {
 };
 
 export default FunFactPage;
+
+export async function getStaticPaths() {
+  const dateList = await prisma.funFactOfTheDay.findMany({
+    select: {
+      date: true,
+    },
+  });
+
+  return {
+    paths: dateList.map((item) => ({
+      params: {
+        date: item.date.toJSON().slice(0, 10),
+      },
+    })),
+    fallback: "blocking",
+  };
+}
+
+export async function getStaticProps(
+  context: GetStaticPropsContext<{ date: string }>
+) {
+  const date = context.params?.date as string;
+  const ssg = await createProxySSGHelpers({
+    router: appRouter,
+    ctx: await createContextInner({}),
+    transformer: superjson,
+  });
+  await ssg.fun.getFunFactOfTheDay.prefetch({ date });
+  return {
+    props: {
+      trpcState: ssg.dehydrate(),
+      date,
+    },
+    revalidate: 10,
+  };
+}

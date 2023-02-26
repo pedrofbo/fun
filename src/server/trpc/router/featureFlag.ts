@@ -3,12 +3,14 @@ import { router, publicProcedure } from "../trpc";
 export interface FeatureFlag {
   [key: string]: boolean;
   darkModeToggle: boolean;
+  urlShortener: boolean;
 }
 
 export const featureFlagRouter = router({
   getFeatureFlags: publicProcedure.query(async ({ ctx }) => {
     const flags: FeatureFlag = {
       darkModeToggle: false,
+      urlShortener: false,
     };
     const databaseFlags = await ctx.prisma.featureFlag.findMany();
     for (const i in databaseFlags) {

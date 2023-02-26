@@ -17,6 +17,7 @@
     "@trpc/next": "^10.0.0",
     "@trpc/react-query": "^10.0.0",
     "@trpc/server": "^10.0.0",
+    "copy-to-clipboard": "^3.3.3",
     "next": "13.0.2",
     "next-themes": "^0.2.1",
     "pokenode-ts": "^1.17.0",

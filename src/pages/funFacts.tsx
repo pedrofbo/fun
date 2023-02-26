@@ -5,7 +5,7 @@ import { loadingBlock } from "../components/loadingBlock";
 import Header from "../components/header";
 import { trpc } from "../utils/trpc";
 
-const FunFactListBlock = (date: string) => {
+const FunFactListBlock = () => {
   const funFacts = trpc.fun.getFunFactList.useQuery();
   const featureFlags = trpc.featureFlag.getFeatureFlags.useQuery();
 

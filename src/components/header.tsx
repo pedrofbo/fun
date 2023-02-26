@@ -47,12 +47,30 @@ export const Header = (featureFlags: FeatureFlag | undefined) => {
     </div>
   );
 
+  const OptionsNavigator = (
+    <div className="flex gap-4">
+      {flags.darkModeToggle ? themeButton : <></>}
+      <div className="rounded-3xl border-2 border-[#15162c] px-2 pt-2 pb-1 dark:border-none dark:bg-[#9b16f3bb]">
+        <a
+          href="https://github.com/pedrofbo/fun"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <Image
+            src="/github.png"
+            alt="Github Source Code"
+            height={48}
+            width={48}
+          ></Image>
+        </a>
+      </div>
+    </div>
+  );
+
   return (
     <div className="grid grid-cols-2">
       <div className="flex flex-col items-start p-8">{HomeNavigator}</div>
-      <div className="flex flex-col items-end p-8">
-        {flags.darkModeToggle ? themeButton : <></>}
-      </div>
+      <div className="flex flex-col items-end p-8">{OptionsNavigator}</div>
     </div>
   );
 };

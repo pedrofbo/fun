@@ -14,8 +14,11 @@ export const Header = (featureFlags: FeatureFlag | undefined) => {
 
   const urlShortenerBlock = flags.urlShortener ? (
     <Link href="/url_shortener">
-      <div className="flex flex-col justify-center border-l-2 border-[#15162c] pl-8 dark:border-[#9b16f3bb]">
-        <h1 className="text-4xl font-extrabold">{urlShortenerIcon}</h1>
+      <div className="group flex justify-center border-l-2 border-[#15162c] pl-8 font-extrabold dark:border-[#9b16f3bb]">
+        <p className="hidden flex-col justify-center group-hover:flex">
+          URL Shortener
+        </p>
+        <h1 className="text-4xl">{urlShortenerIcon}</h1>
       </div>
     </Link>
   ) : (
@@ -33,8 +36,11 @@ export const Header = (featureFlags: FeatureFlag | undefined) => {
         </div>
       </Link>
       <Link href="/funFacts">
-        <div className="flex flex-col justify-center border-l-2 border-[#15162c] pl-8 dark:border-[#9b16f3bb]">
-          <h1 className="text-4xl font-extrabold">{funFactListIcon}</h1>
+        <div className="group flex justify-center border-l-2 border-[#15162c] pl-8 font-extrabold dark:border-[#9b16f3bb]">
+          <p className="hidden flex-col justify-center group-hover:flex">
+            Fun Facts
+          </p>
+          <h1 className="text-4xl">{funFactListIcon}</h1>
         </div>
       </Link>
       {urlShortenerBlock}

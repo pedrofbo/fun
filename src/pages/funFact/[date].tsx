@@ -1,7 +1,7 @@
 import Image from "next/image";
 import superjson from "superjson";
 import { createProxySSGHelpers } from "@trpc/react-query/ssg";
-import { GetStaticPropsContext, InferGetStaticPropsType } from "next";
+import type { GetStaticPropsContext, InferGetStaticPropsType } from "next";
 
 import Header from "../../components/header";
 import { FunBlock } from "../../components/funBlock";

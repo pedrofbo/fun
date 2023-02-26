@@ -1,0 +1,3 @@
+[submodule "services/url_shortener"]
+	path = services/url_shortener
+	url = git@github.com:pedrofbo/url_shortener.git

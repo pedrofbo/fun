@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import {
+import type {
   Pokemon,
   FunFact,
   FunFactOfTheDay,

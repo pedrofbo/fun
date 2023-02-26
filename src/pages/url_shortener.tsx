@@ -1,7 +1,6 @@
 import copy from "copy-to-clipboard";
-import Head from "next/head";
 import Image from "next/image";
-import { FormEvent, useState } from "react";
+import { type FormEvent, useState } from "react";
 
 import Header from "../components/header";
 import { loadingBlock } from "../components/loadingBlock";
@@ -84,7 +83,7 @@ const UrlShortenerPage = () => {
           <h1 className="py-8 text-center text-3xl font-extrabold">
             Agora você vai dizer{" "}
             <span className="italic">
-              "Onde está a página do encurtador de URLs?"
+              &quot;Onde está a página do encurtador de URLs?&quot;
             </span>
           </h1>
           <Image

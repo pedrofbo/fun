@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useTheme } from "next-themes";
 import { useState, useEffect } from "react";
 
-import { FeatureFlag } from "../server/trpc/router/featureFlag";
+import { type FeatureFlag } from "../server/trpc/router/featureFlag";
 
 export const Header = (featureFlags: FeatureFlag | undefined) => {
   const themeButton = DarkModeToggle();

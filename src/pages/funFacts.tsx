@@ -1,5 +1,3 @@
-import Head from "next/head";
-
 import { FunFacts } from "../components/funFactListBlock";
 import { loadingBlock } from "../components/loadingBlock";
 import Header from "../components/header";

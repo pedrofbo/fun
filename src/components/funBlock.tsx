@@ -1,8 +1,8 @@
 import Head from "next/head";
 import Image from "next/image";
 
-import { FunFactBlock, FunFact } from "./funFact";
-import { PokemonBlock, Pokemon, PokedexEntry } from "./pokemon";
+import { FunFactBlock, type FunFact } from "./funFact";
+import { PokemonBlock, type Pokemon, type PokedexEntry } from "./pokemon";
 import { loadingBlock } from "./loadingBlock";
 import Header from "./header";
 import { trpc } from "../utils/trpc";

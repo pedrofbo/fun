@@ -1,28 +1,63 @@
-# Create T3 App
+# Fun
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+This project consists on a fullstack app to build a platform to host Fun Facts.
+It also doubles as a POC implementation of Feature Flags.
+Hence the codename of this project is F.F.
 
-## What's next? How do I make an app with this?
+## Stack
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
-
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+This project was created with the [T3 Stack](https://create.t3.gg/), which
+consists of:
 
 - [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
 - [Prisma](https://prisma.io)
 - [Tailwind CSS](https://tailwindcss.com)
 - [tRPC](https://trpc.io)
 
-## Learn More
+Aside from that, it also features:
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+- (Micro)services written in Go, deployed on AWS with Lambda.
+- [Planetscale](https://planetscale.com/) as a database. It is a MySQL
+  distributed database service implemented with [Vitess](https://vitess.io/).
+  (Planetscale also happens to feature a really friendly free tier 🙂).
+  The distributed nature of Vitess affects how relations work, more info about
+  it [here](https://www.prisma.io/docs/guides/database/using-prisma-with-planetscale#commonalities-with-other-database-providers).
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+## Architecture
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+![architecture](architecture.png)
 
-## How do I deploy this?
+- The server is currently deployed to production with [Vercel](https://vercel.com/)
+  (yet another generous free tier 😀).
+- _"Why is there an URL Shortener in this project?"_ - Yes 😊 (it is also used
+  to display the usage of Feature Flags).
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+## Getting Started
+
+To run this project, `npm` must already be installed.
+
+### Installing dependencies
+
+```bash
+npm install
+```
+
+### Defining environment variables
+
+You should create a `.env` file that declares the variables displayed at the
+`.env.example` file.
+
+### Running a development server:
+
+```bash
+npm run dev
+```
+
+The server will start on port 3000.
+
+### Running a production server:
+
+```bash
+npm run build
+npm run start
+```
